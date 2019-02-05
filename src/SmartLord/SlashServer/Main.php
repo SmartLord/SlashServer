@@ -29,13 +29,13 @@ class Main extends PluginBase
         $this->getLogger()->info("Enabled.");
     }
 
-    public function transferPlayer(Player $player, string $serverName, string $address, int $port, int $second = 0)
+    public function transferPlayer(Player $player, string $server, string $address, int $port, int $second = 0)
     {
         if ($second != 0) {
-            $this->getScheduler()->scheduleRepeatingTask(new TransferTask($this, $player, $serverName, $address, $port, $second), 20);
+            $this->getScheduler()->scheduleRepeatingTask(new TransferTask($this, $player, $server, $address, $port, $second), 20);
         } else {
             $player->transfer($address, $port);
-            $this->getServer()->broadcastMessage(str_replace(["&", "%PLAYER%", "%SERVER%"], ["§", $player->getName(), $serverName], $this->cfg["player-transfer-message"]));
+            $this->getServer()->broadcastMessage(str_replace(["&", "%PLAYER%", "%SERVER%"], ["§", $player->getName(), $server], $this->cfg["player-transfer-message"]));
 
         }
     }
