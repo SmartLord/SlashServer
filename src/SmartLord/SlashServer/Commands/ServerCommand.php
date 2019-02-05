@@ -16,7 +16,6 @@ class ServerCommand extends Command
     public function __construct(Main $plugin, string $name, string $command, string $address, int $port, string $description, array $aliases = [])
     {
         parent::__construct($command, $description, "/$command", $aliases);
-
         $this->plugin = $plugin;
         $this->name = $name;
         $this->address = $address;
