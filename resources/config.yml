@@ -1,0 +1,22 @@
+# %PLAYER%: Player name
+# %SERVER%: Server name
+transfer-timer:
+  enabled: true
+  second: 3
+  message: "&bYou will be transferred in %SECOND% seconds"
+player-transfer-message: "&e%PLAYER% &bhas been transferred to the &e%SERVER%"
+
+servers:
+  lobby:
+    command: lobby
+    address: 127.0.0.1
+    port: "19132"
+    description: lobby server
+    aliases:
+      - hub
+  survival:
+    command: survival
+    address: 127.0.0.1
+    port: 19131
+    description: survival server
+    aliases: []

@@ -1,0 +1,9 @@
+name: SlashServer
+version: 0.1
+author: SmartLord
+api: 3.0.0
+main: SmartLord\SlashServer\Main
+
+permissions:
+  slashserver.reload:
+    default: op
