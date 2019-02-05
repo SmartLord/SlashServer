@@ -16,7 +16,6 @@ class SlashServerCommand extends Command
     public function __construct(Main $plugin)
     {
         parent::__construct("slashserver", "SlashServer main commands", "/slashserver", ["ss"]);
-
         $this->plugin = $plugin;
     }
 
