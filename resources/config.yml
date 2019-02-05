@@ -3,7 +3,7 @@
 transfer-timer:
   enabled: true
   second: 3
-  message: "&bYou will be transferred in %SECOND% seconds"
+  message: "&bYou will be transferred in &e%SECOND% &bseconds"
 player-transfer-message: "&e%PLAYER% &bhas been transferred to the &e%SERVER%"
 
 servers:
