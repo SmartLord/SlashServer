@@ -1,9 +1,13 @@
 name: SlashServer
-version: 1.0
+version: 1.1
 author: SmartLord
 api: 3.0.0
 main: SmartLord\SlashServer\Main
-
+website: https://github.com/SmartLord/SlashServer
 permissions:
-  slashserver.reload:
+  slashserver.command.reload:
     default: op
+    description: Allows to reload config with command
+  slashserver.command.list:
+    default: op
+    description: Allows to view registered servers
