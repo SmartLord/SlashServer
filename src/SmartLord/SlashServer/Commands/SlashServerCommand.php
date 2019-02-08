@@ -24,10 +24,26 @@ class SlashServerCommand extends Command
         if (isset($args[0])) {
             switch (strtolower($args[0])) {
                 case "reload":
-                    if ($sender->hasPermission("slashserver.reload")) {
-                        $this->plugin->reload();
-                        $sender->sendMessage(TextFormat::BLUE . "SlashServer" . TextFormat::DARK_GRAY . " >" . TextFormat::GREEN . " The plugin successfully reloaded!");
-
+                    if ($sender->hasPermission("slashserver.command.reload")) {
+                        if ($this->plugin->reload())
+                            $sender->sendMessage(TextFormat::BLUE . "SlashServer" . TextFormat::DARK_GRAY . " >" . TextFormat::GREEN . " The plugin successfully reloaded!");
+                        else
+                            $sender->sendMessage(TextFormat::BLUE . "SlashServer" . TextFormat::DARK_GRAY . " >" . TextFormat::RED . " There is a Problem! Please check the console");
+                    } else {
+                        $sender->sendMessage(TextFormat::BLUE . "SlashServer" . TextFormat::DARK_GRAY . " >" . TextFormat::RED . " You do not have permission to use this command");
+                    }
+                    break;
+                case "list":
+                    if ($sender->hasPermission("slashserver.command.list")) {
+                        $list = $this->plugin->getRegisteredServers();
+                        if (count($list) === 0) {
+                            $sender->sendMessage(TextFormat::RED . "Servers not found");
+                        } else {
+                            $sender->sendMessage(TextFormat::YELLOW . "Servers:");
+                            foreach ($list as $name) {
+                                $sender->sendMessage(TextFormat::DARK_GRAY . "> " . TextFormat::AQUA . $name);
+                            }
+                        }
                     } else {
                         $sender->sendMessage(TextFormat::BLUE . "SlashServer" . TextFormat::DARK_GRAY . " >" . TextFormat::RED . " You do not have permission to use this command");
                     }
@@ -39,14 +55,16 @@ class SlashServerCommand extends Command
                     break;
                 default:
                     $sender->sendMessage(TextFormat::DARK_GRAY . "-=-=-=" . TextFormat::BLUE . " SlashServer " . TextFormat::DARK_GRAY . "=-=-=-");
-                    $sender->sendMessage(TextFormat::YELLOW . "/slashserver reload -> Reload the config");
-                    $sender->sendMessage(TextFormat::YELLOW . "/slashserver info -> Plugin information");
+                    $sender->sendMessage(TextFormat::YELLOW . "/slashserver reload " . TextFormat::DARK_GRAY . "->" . TextFormat::YELLOW . " Reload the config");
+                    $sender->sendMessage(TextFormat::YELLOW . "/slashserver list " . TextFormat::DARK_GRAY . "->" . TextFormat::YELLOW . " List of registered servers");
+                    $sender->sendMessage(TextFormat::YELLOW . "/slashserver info " . TextFormat::DARK_GRAY . "->" . TextFormat::YELLOW . " Plugin information");
                     break;
             }
         } else {
             $sender->sendMessage(TextFormat::DARK_GRAY . "-=-=-=" . TextFormat::BLUE . " SlashServer " . TextFormat::DARK_GRAY . "=-=-=-");
-            $sender->sendMessage(TextFormat::YELLOW . "/slashserver reload -> Reload the config");
-            $sender->sendMessage(TextFormat::YELLOW . "/slashserver info -> Show information about this plugin");
+            $sender->sendMessage(TextFormat::YELLOW . "/slashserver reload " . TextFormat::DARK_GRAY . "->" . TextFormat::YELLOW . " Reload the config");
+            $sender->sendMessage(TextFormat::YELLOW . "/slashserver list " . TextFormat::DARK_GRAY . "->" . TextFormat::YELLOW . " List of registered servers");
+            $sender->sendMessage(TextFormat::YELLOW . "/slashserver info " . TextFormat::DARK_GRAY . "->" . TextFormat::YELLOW . " Plugin information");
         }
     }
 }
