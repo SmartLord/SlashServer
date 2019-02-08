@@ -7,13 +7,13 @@ use pocketmine\Player;
 
 class TransferTask extends Task
 {
-    private $plugin, $player, $serverName, $address, $port, $second;
+    private $plugin, $player, $server, $address, $port, $second;
 
-    public function __construct(Main $plugin, Player $player, string $serverName, string $address, int $port, int $second)
+    public function __construct(Main $plugin, Player $player, string $server, string $address, int $port, int $second)
     {
         $this->plugin = $plugin;
         $this->player = $player;
-        $this->serverName = $serverName;
+        $this->server = $server;
         $this->address = $address;
         $this->port = $port;
         $this->second = $second;
@@ -23,7 +23,7 @@ class TransferTask extends Task
     {
         $this->second--;
         if ($this->second === 0) {
-            $this->plugin->transferPlayer($this->player, $this->serverName, $this->address, $this->port);
+            $this->plugin->transferPlayer($this->player, $this->server, $this->address, $this->port);
             $this->plugin->getScheduler()->cancelTask($this->getTaskId());
         }
     }
