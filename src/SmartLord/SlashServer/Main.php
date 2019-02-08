@@ -62,7 +62,11 @@ class Main extends PluginBase
         $this->registeredServers = array();
 
         foreach ($this->cfg['servers'] as $name => $server) {
-            $this->getServer()->getCommandMap()->register($server["command"], new ServerCommand($this, (string)$name, (string)$server["command"], (string)$server["address"], (int)$server["port"], (string)$server["description"], (array)$server["aliases"]));
+            if(isset((array)$server["aliases"]))
+                $aliases = (array)$server["aliases"];
+            else
+                $aliases = array();
+            $this->getServer()->getCommandMap()->register($server["command"], new ServerCommand($this, (string)$name, (string)$server["command"], (string)$server["address"], (int)$server["port"], (string)$server["description"], $aliases));
             array_push($this->registeredServers, $name);
         }
     }
