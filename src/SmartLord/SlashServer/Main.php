@@ -13,7 +13,7 @@ use SmartLord\SlashServer\Commands \{
 class Main extends PluginBase
 {
 
-    public const VERSION = "1.0";
+    public const VERSION = "1.1";
 
     public $cfg, $players = [];
 
