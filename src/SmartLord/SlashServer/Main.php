@@ -13,7 +13,7 @@ use SmartLord\SlashServer\Commands \{
 class Main extends PluginBase
 {
 
-    public const VERSION = "1.1";
+    public const VERSION = "1.0";
 
     public $cfg, $players = [];
 
@@ -62,7 +62,7 @@ class Main extends PluginBase
         $this->registeredServers = array();
 
         foreach ($this->cfg['servers'] as $name => $server) {
-            if(isset((array)$server["aliases"]))
+            if(isset($server["aliases"]))
                 $aliases = (array)$server["aliases"];
             else
                 $aliases = array();
