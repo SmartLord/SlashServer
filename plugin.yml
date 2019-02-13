@@ -1,5 +1,5 @@
 name: SlashServer
-version: 1.0
+version: 1.0.0
 author: SmartLord
 api: 3.0.0
 main: SmartLord\SlashServer\Main
