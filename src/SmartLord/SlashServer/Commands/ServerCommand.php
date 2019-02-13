@@ -22,7 +22,7 @@ class ServerCommand extends Command
         $this->port = $port;
     }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args) : bool
+    public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if (!$sender instanceof Player) {
             $sender->sendMessage(TextFormat::RED . "You must run this command in-game");
