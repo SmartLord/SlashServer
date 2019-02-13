@@ -19,7 +19,7 @@ class TransferTask extends Task
         $this->second = $second;
     }
 
-    public function onRun(int $tick)
+    public function onRun(int $tick) : void
     {
         $this->second--;
         if ($this->second === 0) {
