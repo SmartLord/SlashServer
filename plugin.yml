@@ -1,5 +1,5 @@
 name: SlashServer
-version: 1.0.0
+version: 1.1.0
 author: SmartLord
 api: 3.0.0
 main: SmartLord\SlashServer\Main
@@ -11,3 +11,6 @@ permissions:
   slashserver.command.list:
     default: op
     description: Allows to view registered servers
+  slashserver.command.servers:
+    default: op
+    description: Allows to open servers menu

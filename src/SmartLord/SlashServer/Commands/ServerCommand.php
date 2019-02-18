@@ -26,12 +26,12 @@ class ServerCommand extends Command
     {
         if (!$sender instanceof Player) {
             $sender->sendMessage(TextFormat::RED . "You must run this command in-game");
-            return true;
+            return;
         }
 
         if (!$sender->hasPermission("slashserver." . strtolower($this->name))) {
             $sender->sendMessage(TextFormat::RED . "You do not have permission to run this command");
-            return true;
+            return;
         }
 
         if ($this->plugin->cfg["transfer-timer"]["enabled"]) {
@@ -40,6 +40,6 @@ class ServerCommand extends Command
         } else {
             $this->plugin->transferPlayer($sender, $this->name, $this->address, $this->port);
         }
-        return true;
+        return;
     }
 }

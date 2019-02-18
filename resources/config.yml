@@ -4,7 +4,12 @@ transfer-timer:
   enabled: true
   second: 3
   message: "&bYou will be transferred in &e%SECOND% &bseconds"
+
 player-transfer-message: "&e%PLAYER% &bhas been transferred to the &e%SERVER%"
+
+menu:
+  enabled: true
+  title: "Servers"
 
 servers:
   lobby:

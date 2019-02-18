@@ -7,13 +7,16 @@ use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
 use SmartLord\SlashServer\Commands \{
-    SlashServerCommand, ServerCommand
+    SlashServerCommand, ServersCommand, ServerCommand
 };
+
+use jojoe77777\FormAPI\CustomForm;
+use jojoe77777\FormAPI\SimpleForm;
 
 class Main extends PluginBase
 {
 
-    public const VERSION = "1.0.0";
+    public const VERSION = "1.1.0";
 
     public $cfg, $players = [];
 
@@ -33,7 +36,37 @@ class Main extends PluginBase
 
         $this->getServer()->getCommandMap()->register("slashserver", new SlashServerCommand($this));
 
+        if ($this->cfg["menu"]["enabled"])
+            $this->getServer()->getCommandMap()->register("servers", new ServersCommand($this));
+
         $this->getLogger()->info("Enabled.");
+    }
+
+    public function sendServersMenu(Player $player) : void
+    {
+        $list = $this->getRegisteredServers();
+
+        if (count($list) === 0) {
+            $player->sendMessage(TextFormat::RED . "Servers not found");
+            return;
+        }
+
+        $form = new SimpleForm(function (Player $player, int $data = null) {
+            if ($data === null) return;
+
+            $name = $this->getRegisteredServers()[$data];
+            if ($this->cfg["transfer-timer"]["enabled"]) {
+                $player->sendMessage(str_replace(["&", "%PLAYER%", "%SERVER%", "%SECOND%"], ["§", $player->getName(), $name, $this->cfg["transfer-timer"]["second"]], $this->cfg["transfer-timer"]["message"]));
+                $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"], (int)$this->plugin->cfg["transfer-timer"]["second"]);
+            } else {
+                $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"]);
+            }
+        });
+        $form->setTitle($this->cfg["menu"]["title"]);
+        foreach ($list as $name) {
+            $form->addButton($name);
+        }
+        $form->sendToPlayer($player);
     }
 
     public function checkConfig() : bool
@@ -62,7 +95,7 @@ class Main extends PluginBase
         $this->registeredServers = array();
 
         foreach ($this->cfg['servers'] as $name => $server) {
-            if(isset($server["aliases"]))
+            if (isset($server["aliases"]))
                 $aliases = (array)$server["aliases"];
             else
                 $aliases = array();
