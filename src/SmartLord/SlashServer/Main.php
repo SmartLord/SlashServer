@@ -56,7 +56,7 @@ class Main extends PluginBase
             $name = $this->getRegisteredServers()[$data];
             if ($this->cfg["transfer-timer"]["enabled"]) {
                 $player->sendMessage(str_replace(["&", "%PLAYER%", "%SERVER%", "%SECOND%"], ["§", $player->getName(), $name, $this->cfg["transfer-timer"]["second"]], $this->cfg["transfer-timer"]["message"]));
-                $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"], (int)$this->plugin->cfg["transfer-timer"]["second"]);
+                $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"], (int)$this->cfg["transfer-timer"]["second"]);
             } else {
                 $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"]);
             }
