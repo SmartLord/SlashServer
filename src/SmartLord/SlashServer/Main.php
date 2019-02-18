@@ -10,7 +10,6 @@ use SmartLord\SlashServer\Commands \{
     SlashServerCommand, ServersCommand, ServerCommand
 };
 
-use jojoe77777\FormAPI\CustomForm;
 use jojoe77777\FormAPI\SimpleForm;
 
 class Main extends PluginBase
