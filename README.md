@@ -1,6 +1,8 @@
 # SlashServer
 ### Transfer between servers.
-#### Notice: This plugin is using [LibFormAPI](https://github.com/jojoe77777/FormAPI/) and You dont have to install it.
+
+## Requirements
+- FormAPI
 
 ## Features
 - Easy config
