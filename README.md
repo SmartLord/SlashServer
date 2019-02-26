@@ -1,9 +1,6 @@
 # SlashServer
 ### Transfer between servers.
 
-## Requirements
-- FormAPI
-
 ## Features
 - Easy config
 - /[ServerName] Command
