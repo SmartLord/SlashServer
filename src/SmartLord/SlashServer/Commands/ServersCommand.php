@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace SmartLord\SlashServer\Commands;
 
 use pocketmine\command\Command;
