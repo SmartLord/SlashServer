@@ -12,8 +12,6 @@ use SmartLord\SlashServer\Commands \{
     SlashServerCommand, ServersCommand, ServerCommand
 };
 
-use jojoe77777\FormAPI\SimpleForm;
-
 class Main extends PluginBase
 {
 
@@ -51,10 +49,12 @@ class Main extends PluginBase
             $player->sendMessage(TextFormat::RED . "Servers not found");
             return;
         }
-
-        $form = new SimpleForm(function (Player $player, int $data = null) {
+        
+        $formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+        
+        $form = $formapi->createSimpleForm(function (Player $player, int $data = null){
             if ($data === null) return;
-
+            
             $name = $this->getRegisteredServers()[$data];
             if ($this->cfg["transfer-timer"]["enabled"]) {
                 $player->sendMessage(str_replace(["&", "%PLAYER%", "%SERVER%", "%SECOND%"], ["§", $player->getName(), $name, $this->cfg["transfer-timer"]["second"]], $this->cfg["transfer-timer"]["message"]));
@@ -62,7 +62,8 @@ class Main extends PluginBase
             } else {
                 $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"]);
             }
-        });
+        }
+                                          
         $form->setTitle($this->cfg["menu"]["title"]);
         foreach ($list as $name) {
             $form->addButton($name);
