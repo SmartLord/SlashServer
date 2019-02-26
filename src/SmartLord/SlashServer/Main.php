@@ -62,7 +62,7 @@ class Main extends PluginBase
             } else {
                 $this->transferPlayer($player, $name, (string)$this->cfg['servers'][$name]["address"], (int)$this->cfg['servers'][$name]["port"]);
             }
-        }
+        });
                                           
         $form->setTitle($this->cfg["menu"]["title"]);
         foreach ($list as $name) {
