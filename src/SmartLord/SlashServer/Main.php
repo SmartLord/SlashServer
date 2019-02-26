@@ -19,7 +19,7 @@ class Main extends PluginBase
 
     public $cfg, $players = [];
 
-    private $registeredServers = array();
+    private $registeredServers = array(), $formapi;
 
     public function onEnable()
     {
@@ -35,8 +35,14 @@ class Main extends PluginBase
 
         $this->getServer()->getCommandMap()->register("slashserver", new SlashServerCommand($this));
 
-        if ($this->cfg["menu"]["enabled"])
-            $this->getServer()->getCommandMap()->register("servers", new ServersCommand($this));
+        if ($this->cfg["menu"]["enabled"]) {
+			if($this->formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI")) {
+				$this->getServer()->getCommandMap()->register("servers", new ServersCommand($this));
+			} else {
+				$this->getLogger()->alert("FormAPI plugin not found.");
+				$this->getLogger()->alert("Servers menu disabled.");
+			}
+		}
 
         $this->getLogger()->info("Enabled.");
     }
@@ -52,7 +58,7 @@ class Main extends PluginBase
         
         $formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
         
-        $form = $formapi->createSimpleForm(function (Player $player, int $data = null){
+        $form = $this->formapi->createSimpleForm(function (Player $player, int $data = null){
             if ($data === null) return;
             
             $name = $this->getRegisteredServers()[$data];
@@ -113,7 +119,7 @@ class Main extends PluginBase
 
     public function transferPlayer(Player $player, string $server, string $address, int $port, int $second = 0) : void
     {
-        if (!$player->hasPermission("slashserver." . strtolower($this->name))) {
+        if (!$player->hasPermission("slashserver." . strtolower($server))) {
             $player->sendMessage(TextFormat::RED . "You do not have permission to transfer to this server");
             return;
         }
