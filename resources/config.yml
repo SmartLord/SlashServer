@@ -19,9 +19,13 @@ servers:
     description: lobby server
     aliases:
       - hub
+    image-type: url
+    image: https://gamepedia.cursecdn.com/minecraft_gamepedia/thumb/d/d6/Nether_Bricks.png/150px-Nether_Bricks.png?version=389147a764733d6b6fe4053cd2411316
   survival:
     command: survival
     address: 127.0.0.1
     port: 19131
     description: survival server
     aliases: []
+    image-type: path
+    image: textures/items/iron_pickaxe

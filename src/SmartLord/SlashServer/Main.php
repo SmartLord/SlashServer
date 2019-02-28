@@ -12,6 +12,8 @@ use SmartLord\SlashServer\Commands \{
     SlashServerCommand, ServersCommand, ServerCommand
 };
 
+use SmartLord\SlashServer\Lib\jojoe77777\FormAPI\SimpleForm;
+
 class Main extends PluginBase
 {
 
@@ -19,12 +21,13 @@ class Main extends PluginBase
 
     public $cfg, $players = [];
 
-    private $registeredServers = array(), $formapi;
+    private $registeredServers = array();
 
     public function onEnable()
     {
         @mkdir($this->getDataFolder());
-        $this->saveDefaultConfig();
+		$this->saveDefaultConfig();
+        
         $this->cfg = $this->getConfig()->getAll();
 
         if ($this->checkConfig()) {
@@ -35,14 +38,8 @@ class Main extends PluginBase
 
         $this->getServer()->getCommandMap()->register("slashserver", new SlashServerCommand($this));
 
-        if ($this->cfg["menu"]["enabled"]) {
-			if($this->formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI")) {
-				$this->getServer()->getCommandMap()->register("servers", new ServersCommand($this));
-			} else {
-				$this->getLogger()->alert("FormAPI plugin not found.");
-				$this->getLogger()->alert("Servers menu disabled.");
-			}
-		}
+        if ($this->cfg["menu"]["enabled"])
+			$this->getServer()->getCommandMap()->register("servers", new ServersCommand($this));
 
         $this->getLogger()->info("Enabled.");
     }
@@ -56,9 +53,7 @@ class Main extends PluginBase
             return;
         }
         
-        $formapi = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        
-        $form = $this->formapi->createSimpleForm(function (Player $player, int $data = null){
+        $form = new SimpleForm(function (Player $player, int $data = null){
             if ($data === null) return;
             
             $name = $this->getRegisteredServers()[$data];
@@ -73,7 +68,19 @@ class Main extends PluginBase
                                           
         $form->setTitle($this->cfg["menu"]["title"]);
         foreach ($list as $name) {
-            $form->addButton($name);
+			if(isset($this->cfg['servers'][$name]["image"]) && isset($this->cfg['servers'][$name]["image-type"])) {
+				$img = $this->cfg['servers'][$name]["image"];
+				if($this->cfg['servers'][$name]["image-type"] === "url"){
+					if(empty(parse_url($img)['scheme']))
+						$form->addButton($name, 1, "http://" . $img);
+					else
+						$form->addButton($name, 1, $img);
+				} else if($this->cfg['servers'][$name]["image-type"] === "path"){
+					$form->addButton($name, 0, $img);
+				}
+			} else {
+				$form->addButton($name);
+			}
         }
         $form->sendToPlayer($player);
     }
